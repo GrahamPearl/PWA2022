@@ -1,11 +1,4 @@
-const nav_items = [
-    "1",
-    "2",
-    "3"
-];
-
-var nav = document.getElementById("navList");
-var navItems = document.createElement("ul");
+'use strict';
 
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw.js').then(function(registration) {
@@ -15,16 +8,51 @@ if ('serviceWorker' in navigator) {
     });
 }
 
-nav_items.forEach(item => {
-    let li = document.createElement("li");
-    let link = document.createElement("a");
-    link.className = "dropdown-item";
-    link.innerText = item
-    link.href = "#"
-    li.appendChild(link)
-    navItems.appendChild(li)
-});
+if (document.getElementById("submitBtn") != null) {
+    let submitBtn = document.getElementById("submitBtn");
+    submitBtn.addEventListener("click", function(evt) {
+        evt.preventDefault();
+        window.location.replace("");
+        return false;
+    });
+}
 
-if (nav != null) {
-    nav.appendChild(navItems);
+function rowFormatter(index, row) {
+    var html = []
+    $.each(row, function(key, value) {
+        html.push('<p><b>' + key + ':</b> ' + value + '</p>')
+    })
+    return html.join('')
+}
+
+function toggleElement(elementID) {
+    let item = document.getElementById(elementID);
+    if (item != null)
+        if (item.style.display != "none") {
+            item.style.display = "none";
+        } else {
+            item.style.display = "block";
+        }
+}
+
+if (document.getElementById("navList") != null) {
+    let nav = document.getElementById("navList");
+    const nav_items = {
+        'Book': 'citation_book',
+        'Journal': 'citation_journal',
+        'Movie': '#',
+        'Website': '#',
+    };
+
+    for (const [key, value] of Object.entries(nav_items)) {
+        console.log(key, ' = ', value);
+        let li = document.createElement("li");
+        let link = document.createElement("a");
+        link.className = "dropdown-item";
+        link.innerText = key;
+        link.href = "#" + value;
+        link.onclick = toggleElement(key);
+        li.appendChild(link);
+        nav.appendChild(li);
+    }
 }
