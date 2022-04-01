@@ -1,11 +1,15 @@
 const cacheName = 'shell-content::static';
 var filesToCache = [
-    '/',
+    '/offline.html',
     '/styles/inline.css',
-    '/js/scripts.js',
     '/images/logo.svg',
-    '/offline.html'
+    '/'
 ];
+
+/*
+,
+    '/js/scripts.js',    
+*/
 
 self.addEventListener('install', e => {
     e.waitUntil(

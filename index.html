@@ -8,17 +8,33 @@
     <link rel="manifest" href="/manifest.json">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css" />
+    <script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kalam&display=swap" />
+    <link rel="stylesheet" type="text/html" href="/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="styles/inline.css">
 </head>
 
 <body>
     <header class="header">
-        <h1 class="header">Sushi</h1>
+        <h1 class="header text-center">Sushi - Citations</h1>
     </header>
 
-    <nav class="nav">
-        ...
+    <nav class="navbar navbar-dark bg-dark">
+        <!-- Navbar content -->
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">Navbar</a>
+                </div>
+            </nav>
+        </div>
     </nav>
+
+
+
 
     <main class="main">
         ...
@@ -31,16 +47,9 @@
     <div class="loader">
     </div>
 
+    <script type="text/html" src="/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="app.js" async></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js').then(function(registration) {
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-            }).catch(function(err) {
-                console.log('ServiceWorker registration failed: ', err);
-            });
-        }
-    </script>
+
 </body>
 
 </html>
