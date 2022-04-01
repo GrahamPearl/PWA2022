@@ -1,5 +1,5 @@
 function LinkFormatter(value, row, index) {
-    return "<a href='" + row.link + "'>Link</a>";
+    return '<a class="btn btn-primary" href="' + row.link + '">Link</a>';
 }
 
 function PhotoFormatter(value, row, index) {

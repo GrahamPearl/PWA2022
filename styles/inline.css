@@ -33,6 +33,18 @@ body {
     color: whitesmoke;
 }
 
+.table td:not(:nth-child(2)) {
+    width: 10%;
+}
+
+.table td:nth-child(3) a {
+    width: 100%;
+}
+
+#searchBtn {
+    width: 10%;
+}
+
 .table-hover tbody tr:hover td,
 .table-hover tbody tr:hover th {
     color: black;
