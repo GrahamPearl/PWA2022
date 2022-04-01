@@ -12,6 +12,7 @@ var filesToCache = [
     '/js/scripts.js',    
 */
 
+
 self.addEventListener('install', e => {
     e.waitUntil(
         caches.open(cacheName).then(cache => {
@@ -19,6 +20,7 @@ self.addEventListener('install', e => {
         })
     );
 });
+
 
 self.addEventListener('fetch', event => {
     event.respondWith(
@@ -29,3 +31,5 @@ self.addEventListener('fetch', event => {
         })
     );
 });
+/*
+ */

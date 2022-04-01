@@ -26,6 +26,7 @@ function rowFormatter(index, row) {
 }
 
 function toggleElement(elementID) {
+    //alert('Clicked: ' + elementID)
     let item = document.getElementById(elementID);
     if (item != null)
         if (item.style.display != "none") {
@@ -40,8 +41,8 @@ if (document.getElementById("navList") != null) {
     const nav_items = {
         'Book': 'citation_book',
         'Journal': 'citation_journal',
-        'Movie': '#',
-        'Website': '#',
+        'Movie': 'citation_movie',
+        'Website': 'citation_website',
     };
 
     for (const [key, value] of Object.entries(nav_items)) {
@@ -51,7 +52,12 @@ if (document.getElementById("navList") != null) {
         link.className = "dropdown-item";
         link.innerText = key;
         link.href = "#" + value;
-        link.onclick = toggleElement(key);
+        li.addEventListener("click",
+            function() {
+                //alert('Clicked: ' + value);
+                toggleElement(value);
+
+            }, false);
         li.appendChild(link);
         nav.appendChild(li);
     }

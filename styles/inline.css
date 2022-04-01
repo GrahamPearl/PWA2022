@@ -7,13 +7,26 @@
 }
 */
 
+h1,
+h2,
+h3,
+h4 {
+    color: white;
+}
+
 body {
     background-image: url("/images/bg.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
     font-family: "Numans", sans-serif;
-    color: whitesmoke;
+    color: black;
+}
+
+.form input,
+.form label {
+    color: black;
+    background-color: whitesmoke;
 }
 
 .table {
