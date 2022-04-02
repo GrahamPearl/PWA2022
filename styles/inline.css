@@ -20,6 +20,9 @@ body {
     background-repeat: no-repeat;
     height: 100%;
     font-family: "Numans", sans-serif;
+    background-color: #343a40;
+    background: url("/images/bg.jpg") no-repeat center center;
+    background-size: cover;
     color: black;
 }
 
@@ -30,7 +33,7 @@ body {
 }
 
 .table {
-    color: whitesmoke;
+    color: rgba(245, 245, 245, 0.671);
 }
 
 .table td:not(:nth-child(2)) {
