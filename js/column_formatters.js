@@ -3,7 +3,7 @@ function LinkFormatter(value, row, index) {
 }
 
 function PhotoFormatter(value, row, index) {
-    return '<img src="' + row.photo + '" width="40" class="rounded-circle">';
+    return '<img src="' + row.photo + '" width="40px" class="rounded-circle">';
 }
 
 function ActionFormatter(value, row, index) {

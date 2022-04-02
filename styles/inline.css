@@ -41,6 +41,10 @@ body {
     width: 100%;
 }
 
+.table img {
+    width: 40px;
+}
+
 #searchBtn {
     width: 10%;
 }

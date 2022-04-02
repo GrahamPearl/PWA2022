@@ -49,9 +49,12 @@ if (document.getElementById("navList") != null) {
         console.log(key, ' = ', value);
         let li = document.createElement("li");
         let link = document.createElement("a");
+
         link.className = "dropdown-item";
         link.innerText = key;
         link.href = "#" + value;
+        link.setAttribute("data-bs-toggle", "modal");
+        link.setAttribute("data-bs-target", link.href);
         li.addEventListener("click",
             function() {
                 //alert('Clicked: ' + value);
