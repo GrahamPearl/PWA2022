@@ -1,5 +1,7 @@
 "use strict";
 
+var citation_selected = 'none';
+
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker
         .register("/sw.js")
@@ -31,8 +33,119 @@ function rowFormatter(index, row) {
     return html.join("");
 }
 
+function buildCitationForm(title) {
+    let citation_form = '';
+    const citation_book = `
+    <div class="col">
+        <div class="input-group">
+            <input id="Book-Author" type="text" class="form-control mb-3" placeholder="Author" aria-label="Author" />
+        </div>
+        <div class="input-group">
+            <input id="Book-Title" type="text" class="form-control mb-3" placeholder="Title" aria-label="Title" />
+        </div>
+    </div>
+    <div class="col">
+        <div class="input-group">
+            <input id="Book-City" type="text" class="form-control mb-3" placeholder="City" aria-label="City" />
+        </div>
+        <div class="input-group">
+            <input id="Book-State" type="text" class="form-control mb-3" placeholder="State/Country" aria-label="State/Country" />
+            <input id="Book-Year" type="date" class="form-control mb-3" placeholder="Year" aria-label="Year" minViewMode:"year" />
+        </div>
+    </div>`;
+    const citation_journal = `
+    <div class="col">
+        <div class="input-group">
+            <input id="Journal-Author" type="text" class="form-control mb-3" placeholder="Author" aria-label="Author" />
+        </div>
+        <div class="input-group">
+            <input id="Journal-Article-Title" type="text" class="form-control mb-3" placeholder="Article-Title" aria-label="Article-Title" />
+        </div>
+        <div class="input-group">
+            <input id="Journal-Title" type="text" class="form-control mb-3" placeholder="Journal-Title" aria-label="Journal-Title" />
+        </div>
+    </div>
+    <div class="col">
+        <div class="input-group">
+            <input id="Journal-Source" type="text" class="form-control mb-3" placeholder="Retrieved from" aria-label="Retrieved from" />
+        </div>
+        <div class="input-group">
+            <input id="Journal-State" type="text" class="form-control mb-3" placeholder="State/Country" aria-label="State/Country" />
+            <input id="Journal-Year" type="date" class="form-control mb-3" placeholder="Year" aria-label="Year" />
+        </div>
+        <div class="input-group">
+            <input id="Journal-Volume" type="text" class="form-control mb-3" placeholder="Volume" aria-label="Volume" />
+            <input id="Journal-Pages" type="text" class="form-control mb-3" placeholder="Pages" aria-label="Pages" />
+        </div>
+    </div>`;
+    const citation_movie = `
+    <div class="col">
+        <div class="input-group">
+            <input id="Movie-Producer" type="text" class="form-control mb-3" placeholder="Producer" aria-label="Producer" />
+        </div>
+        <div class="input-group">
+            <input id="Movie-Director" type="text" class="form-control mb-3" placeholder="Writer/Director" aria-label="Writer/Director" />
+        </div>
+        <div class="input-group">
+            <input id="Movie-Title" type="text" class="form-control mb-3" placeholder="Title" aria-label="Title" />
+        </div>
+    </div>
+    <div class="col">
+        <div class="input-group">
+            <input id="Movie-Publisher" type="text" class="form-control mb-3" placeholder="Publisher" aria-label="Publisher" />
+        </div>
+        <div class="input-group">
+            <input id="Movie-State" type="text" class="form-control mb-3" placeholder="State/Country" aria-label="State/Country" />
+            <input id="Movie-Year" type="date" class="form-control mb-3" placeholder="Year" aria-label="Year" />
+        </div>
+    </div>`;
+
+    const citation_website = `
+    <div class="col">
+        <div class="input-group">
+            <input id="Website-Author" type="text" class="form-control mb-3" placeholder="Author" aria-label="Author" />
+        </div>
+        <div class="input-group">
+            <input id="Wesite-URL" type="url" class="form-control mb-3" placeholder="Website-URL" aria-label="Website-URL" />
+        </div>
+        <div class="input-group">
+            <input id="Website-Title" type="text" class="form-control mb-3" placeholder="Title" aria-label="Title" />
+        </div>
+    </div>
+    <div class="col">
+        <div class="input-group">
+            <input id="Website-Publisher" type="text" class="form-control mb-3" placeholder="Publisher" aria-label="Publisher" />
+        </div>
+        <div class="input-group">            
+            <label for="Website-Created class="col-sm-4"">Date Created  </label>
+            <input id="Website-Created" type="date" class="form-control col-sm-8" placeholder="Date Created" aria-label="Date Created" />        
+        </div>
+        <div class="input-group ">
+            <label for="Website-Accessed" class="col-sm-4">Date Accessed</label>
+            <input id="Website-Accessed" class="form-control col-sm-8" type="date" placeholder="Date Accessed" aria-label="Date Accessed" />
+        </div>
+    </div>`;
+
+    if (title == 'Book') citation_form = citation_book;
+    if (title == 'Journal') citation_form = citation_journal;
+    if (title == 'Movie') citation_form = citation_movie;
+    if (title == 'Website') citation_form = citation_website;
+
+    return citation_form;
+}
+
 function toggleElement(elementID, mode = null) {
-    //alert('Clicked: ' + elementID)
+    let item = document.getElementById(elementID);
+    if (item != null)
+        if (mode != null) item.style.display = mode;
+        else if (item.style.display != "none")
+        item.style.display = "none";
+    else
+        item.style.display = "block";
+
+}
+
+function toggleElementCitation(elementID, mode = null) {
     let item = document.getElementById(elementID);
     if (item != null)
         if (mode != null) item.style.display = mode;
@@ -41,6 +154,18 @@ function toggleElement(elementID, mode = null) {
     } else {
         item.style.display = "block";
     }
+    item.innerHTML = `
+    <div class="m-4">
+
+    <form>
+        <div class="row g-2">
+            <button type="button" id="Modal-Search" class="btn btn-lg btn-secondary">API Search</button>
+            ` + buildCitationForm(citation_selected) + `
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>`;
+
+    createModalGeneric(citation_selected);
 }
 
 function toggleModalElement(eventId, modalId) {
@@ -55,10 +180,10 @@ function toggleModalElement(eventId, modalId) {
 if (document.getElementById("navList") != null) {
     let nav = document.getElementById("navList");
     const nav_items = {
-        Book: "citation_book",
-        Journal: "citation_journal",
-        Movie: "citation_movie",
-        Website: "citation_website",
+        Book: "citation",
+        Journal: "citation",
+        Movie: "citation",
+        Website: "citation",
     };
 
     for (const [key, value] of Object.entries(nav_items)) {
@@ -73,7 +198,12 @@ if (document.getElementById("navList") != null) {
         li.addEventListener(
             "click",
             function() {
-                toggleElement(value);
+                if (citation_selected != link.innerText) {
+                    citation_selected = link.innerText;
+                    toggleElementCitation(value, "block")
+                } else
+                    toggleElement(value);
+                citation_selected = link.innerText;
             },
             false
         );
@@ -82,18 +212,46 @@ if (document.getElementById("navList") != null) {
     }
 }
 
+let modalGeneric = null;
+
+
+function createModalGeneric(title) {
+    modalGeneric = document.getElementById("Modal-View");
+    modalGeneric.innerHTML = `
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" > ` + title + ` </h5> 
+                <button type="button" class="btn-close" data-bs-dismiss="modal" > </button> 
+            </div> 
+            <div class="modal-body" >
+                <p><input id="searchFor" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" required /></p> 
+                <p class="text-secondary"><small></small></p>
+            </div> 
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Cancel</button> 
+                <button type="button" class="btn btn-primary">Search</button> 
+            </div> 
+        </div> 
+    </div>`;
+}
+
 document.addEventListener("DOMContentLoaded", function() {
     const toggle_items = {
-        Book: "citation_book",
-        Journal: "citation_journal",
-        Movie: "citation_movie",
-        Website: "citation_website",
+        Book: "citation",
+        Journal: "citation",
+        Movie: "citation",
+        Website: "citation",
         listCitation: "citation_list",
         listAPAFormat: "apa6formats",
         listBlogPosts: "blogposts",
     };
 
-    toggleModalElement("Model-Event_Search", "Modal-GoogleBook");
+    if (document.getElementById("Modal-Search") != null)
+        toggleModalElement("Modal-Search", "Modal-View")
+    else
+        alert("No Modal-Search found");
+
     for (const [key, value] of Object.entries(toggle_items)) {
         toggleElement(value, "none");
     }
