@@ -1,6 +1,6 @@
 "use strict";
 
-var citation_selected = 'Book';
+var citation_selected = "Book";
 
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker
@@ -34,7 +34,7 @@ function rowFormatter(index, row) {
 }
 
 function buildCitationForm(title) {
-    let citation_form = '';
+    let citation_form = "";
     const citation_book = `
     <div class="col">
         <div class="input-group">
@@ -126,10 +126,10 @@ function buildCitationForm(title) {
         </div>
     </div>`;
 
-    if (title == 'Book') citation_form = citation_book;
-    if (title == 'Journal') citation_form = citation_journal;
-    if (title == 'Movie') citation_form = citation_movie;
-    if (title == 'Website') citation_form = citation_website;
+    if (title == "Book") citation_form = citation_book;
+    if (title == "Journal") citation_form = citation_journal;
+    if (title == "Movie") citation_form = citation_movie;
+    if (title == "Website") citation_form = citation_website;
 
     return citation_form;
 }
@@ -138,11 +138,8 @@ function toggleElement(elementID, mode = null) {
     let item = document.getElementById(elementID);
     if (item != null)
         if (mode != null) item.style.display = mode;
-        else if (item.style.display != "none")
-        item.style.display = "none";
-    else
-        item.style.display = "block";
-
+        else if (item.style.display != "none") item.style.display = "none";
+    else item.style.display = "block";
 }
 
 function toggleElementCitation(elementID, mode = null) {
@@ -157,6 +154,68 @@ function toggleElementCitation(elementID, mode = null) {
 
     let citation_content = document.getElementById("citation-content");
     citation_content.innerHTML = buildCitationForm(citation_selected);
+}
+
+$("#table-search-results").bootstrapTable({
+    url: "",
+    pagination: true,
+    spagingType: "simple",
+    search: false,
+    checkboxEnabled: true,
+    columns: [{
+            field: "publishedDate",
+            title: "Date Published",
+        },
+        {
+            field: "title",
+            title: "Title",
+
+        },
+    ],
+});
+
+function updateSearchTable(searchFor) {
+    searchFor = searchFor.split(" ").join("+");
+    console.log("Loading Book [" + searchFor + "] Information");
+    fetch(
+            "https://www.googleapis.com/books/v1/volumes?q=inauthor+" +
+            searchFor +
+            "&maxResults=40&startIndex=" +
+            currentPage
+        )
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("HTTP error " + response.status);
+            }
+            return response.json();
+        })
+        .then((json) => {
+            let data = json.items;
+            let books = [];
+            for (var i = 0; i < data.length; i++) {
+                var obj = data[i];
+                var book = {
+                    publishedDate: obj.volumeInfo.publishedDate,
+                    title: obj.volumeInfo.title,
+                };
+                books.push(book);
+            }
+            console.table(books);
+
+            $("#table-search-results").bootstrapTable("load", books);
+            $(document).ready(function() {
+                $("#table-search-results").DataTable();
+            });
+
+            console.log("Data loaded");
+        });
+}
+
+function showAlert() {
+    let toFind = document.getElementById("modal-searchFor").value;
+    toFind = toFind.split(" ").join("+");
+
+    updateSearchTable(toFind);
 }
 
 var modalSearch = null;
@@ -195,9 +254,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 function() {
                     if (citation_selected != link.innerText) {
                         citation_selected = link.innerText;
-                        toggleElementCitation(value, "block")
-                    } else
-                        toggleElement(value);
+                        toggleElementCitation(value, "block");
+                    } else toggleElement(value);
                     citation_selected = link.innerText;
                 },
                 false
@@ -208,9 +266,11 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     if (document.getElementById("Modal-Search") != null)
-        modalSearch = new bootstrap.Modal(document.getElementById('Modal-View'), options)
-    else
-        alert("No Modal-Search found");
+        modalSearch = new bootstrap.Modal(
+            document.getElementById("Modal-View"),
+            options
+        );
+    else alert("No Modal-Search found");
 
     for (const [key, value] of Object.entries(toggle_items)) {
         toggleElement(value, "none");

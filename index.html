@@ -14,13 +14,17 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
 
-    <link rel="stylesheet" href="/fonts/fontawesome/css/all.css" />
-
-    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
-
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css" />
     <script src="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.js"></script>
+    <script type="text/javascript" src="/datatables/datatables.min.js"></script>
+    <link rel="stylesheet" href="/fonts/fontawesome/css/all.css" />
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.19.1/dist/bootstrap-table.min.css" />
+    <link rel="stylesheet" type="text/css" href="datatables/datatables.min.css" />
+    <link rel="stylesheet" type="text/css" href="styles/inline.css" />
+
+
+    <script src="/js/citation_book.js"></script>
     <!---    
         -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Kalam&display=swap" />
@@ -30,8 +34,6 @@
         <link rel="stylesheet" type="text/html" href="/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="/">
     -->
-
-    <link rel="stylesheet" type="text/css" href="styles/inline.css" />
 </head>
 
 <body>
@@ -85,14 +87,14 @@
                 <form>
                     <div class="row g-2">
                         <div id="citation-content"></div>
-                        <button type="button" id="Modal-Search" class="btn btn-lg btn-secondary" data-bs-toggle="modal" data-bs-target="#Modal-View-URL" href="#Modal-View-URL">API Search</button>
+                        <button type="button" id="Modal-Search" class="btn btn-lg btn-secondary" data-bs-toggle="modal" data-bs-target="#Modal-View-URL">API Search</button>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
         </section>
 
         <section>
-                <div class="modal fade" id="Modal-View-URL" aria-hidden="true" aria-labelledby="Modal-View-URL" tabindex="-1">
+        <div class="modal fade" id="Modal-View-URL" aria-hidden="true" aria-labelledby="Modal-View-URL" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -100,25 +102,28 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p><input id="searchFor" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" required /></p>
+                    <p><input id="modal-searchFor" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" required /></p>
                     <p class="text-secondary"><small></small></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button class="btn btn-primary" data-bs-target="#Modal-View-Search" data-bs-toggle="modal" data-bs-dismiss="modal">Search</button>
+                    <button class="btn btn-primary" data-bs-target="#Modal-View-Search" data-bs-toggle="modal" data-bs-dismiss="modal" onclick="showAlert()">Search</button>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal fade" id="Modal-View-Search" aria-hidden="true" aria-labelledby="Modal-View-Results" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="Modal-View-Results">API Search Results</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
+                    <div id="content">
+                        <table id="table-search-results" class="table table-fit table-striped" data-toggle="table" data-click-to-select="true" data-single-select="true" data-pagination="true">
+                        </table>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" data-bs-target="#Modal-View-URL" data-bs-toggle="modal" data-bs-dismiss="modal">Back to API Search</button>
@@ -137,7 +142,7 @@
                   <a class="navbar-brand" href="#">Citation List Search</a>
                         <div class="d-flex">
                             <input id="searchFor" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" required />
-                            <button class="btn btn-outline-success" type="button" onclick="updateBookTable(document.getElementById('searchFor').value)">
+                            <button class="btn btn-outline-success" type="button">
                       Search
                     </button>
                         </div>
