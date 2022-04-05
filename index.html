@@ -79,20 +79,54 @@
 
     <main class="main">    
         <section id="citation" class="d-print-none">
-            <br />
+            <br/>
             <h3>Add Citation</h3>
             <div class="m-4">
                 <form>
                     <div class="row g-2">
-                        <button type="button" id="Modal-Search" class="btn btn-lg btn-secondary">API Search</button>
+                        <div id="citation-content"></div>
+                        <button type="button" id="Modal-Search" class="btn btn-lg btn-secondary" data-bs-toggle="modal" data-bs-target="#Modal-View-URL" href="#Modal-View-URL">API Search</button>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
         </section>
 
         <section>
-            <div id="Modal-View" class="modal fade" tabindex="-1">                
+                <div class="modal fade" id="Modal-View-URL" aria-hidden="true" aria-labelledby="Modal-View-URL" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="">API Search</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><input id="searchFor" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" required /></p>
+                    <p class="text-secondary"><small></small></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" data-bs-target="#Modal-View-Search" data-bs-toggle="modal" data-bs-dismiss="modal">Search</button>
+                </div>
             </div>
+        </div>
+    </div>
+    <div class="modal fade" id="Modal-View-Search" aria-hidden="true" aria-labelledby="Modal-View-Results" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="Modal-View-Results">API Search Results</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-target="#Modal-View-URL" data-bs-toggle="modal" data-bs-dismiss="modal">Back to API Search</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Add To Citations</button>
+                </div>
+            </div>
+        </div>
+    </div>
         </section>
 
         <section id="citation_list">

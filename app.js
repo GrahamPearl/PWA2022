@@ -154,51 +154,12 @@ function toggleElementCitation(elementID, mode = null) {
     } else {
         item.style.display = "block";
     }
-    item.innerHTML = `
-    <div class="m-4">
 
-    <form>
-        <div class="row g-2">
-            <button type="button" id="Modal-Search" class="btn btn-lg btn-secondary">API Search</button>
-            ` + buildCitationForm(citation_selected) + `
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </form>`;
-
-    createModalGeneric(citation_selected);
+    let citation_content = document.getElementById("citation-content");
+    citation_content.innerHTML = buildCitationForm(citation_selected);
 }
 
-function toggleModalElement(eventId, modalId) {
-    var btn = document.getElementById(eventId);
-
-    btn.addEventListener("click", function() {
-        var myModal = new bootstrap.Modal(document.getElementById(modalId));
-        myModal.show();
-    });
-}
-
-function createModalGeneric(title) {
-    modalGeneric = document.getElementById("Modal-View");
-    modalGeneric.innerHTML = `
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" > ` + title + ` </h5> 
-                <button type="button" class="btn-close" data-bs-dismiss="modal" > </button> 
-            </div> 
-            <div class="modal-body" >
-                <p><input id="searchFor" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" required /></p> 
-                <p class="text-secondary"><small></small></p>
-            </div> 
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" >Cancel</button> 
-                <button type="button" class="btn btn-primary">Search</button> 
-            </div> 
-        </div> 
-    </div>`;
-}
-
-let modalGeneric = null;
+var modalSearch = null;
 
 document.addEventListener("DOMContentLoaded", function() {
     const toggle_items = {
@@ -247,7 +208,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     if (document.getElementById("Modal-Search") != null)
-        toggleModalElement("Modal-Search", "Modal-View")
+        modalSearch = new bootstrap.Modal(document.getElementById('Modal-View'), options)
     else
         alert("No Modal-Search found");
 

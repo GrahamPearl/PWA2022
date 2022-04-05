@@ -2,43 +2,52 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" type="text/html" href="/bootstrap/css/bootstrap.min.css">
+    <script>
+        var myModal = new bootstrap.Modal(document.getElementById('Modal-View-URL'), options)
+    </script>
+
 </head>
 
 <body>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade" id="Modal-View-URL" aria-hidden="true" aria-labelledby="Modal-View-URL" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <h5 class="modal-title" id="">API Search</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ...
+                    <p><input id="searchFor" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" required /></p>
+                    <p class="text-secondary"><small></small></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" data-bs-target="#Modal-View-Search" data-bs-toggle="modal" data-bs-dismiss="modal">Search</button>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="Modal-View-Search" aria-hidden="true" aria-labelledby="Modal-View-Results" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="Modal-View-Results">API Search Results</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
 
-    <script type="text/html" src="/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script>
-        var myModal = document.getElementById('myModal')
-        var myInput = document.getElementById('myInput')
-
-        myModal.addEventListener('shown.bs.modal', function() {
-            myInput.focus()
-        })
-    </script>
-    <!---    
--->
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-target="#Modal-View-URL" data-bs-toggle="modal" data-bs-dismiss="modal">Back to API Search</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Add To Citations</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-primary" data-bs-toggle="modal" href="#Modal-View-URL" role="button">Open first modal</a>
 
 </body>
 
