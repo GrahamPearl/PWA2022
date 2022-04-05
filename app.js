@@ -1,6 +1,6 @@
 "use strict";
 
-var citation_selected = 'none';
+var citation_selected = 'Book';
 
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker
@@ -116,13 +116,13 @@ function buildCitationForm(title) {
         <div class="input-group">
             <input id="Website-Publisher" type="text" class="form-control mb-3" placeholder="Publisher" aria-label="Publisher" />
         </div>
-        <div class="input-group">            
-            <label for="Website-Created class="col-sm-4"">Date Created  </label>
-            <input id="Website-Created" type="date" class="form-control col-sm-8" placeholder="Date Created" aria-label="Date Created" />        
+        <div class="input-group">
+            <label for="Website-Created" class="form-control"">Date Created</label>            
+            <input  id="Website-Created" class="form-control" type="date"  placeholder="Date Created" aria-label="Date Created"/>
         </div>
-        <div class="input-group ">
-            <label for="Website-Accessed" class="col-sm-4">Date Accessed</label>
-            <input id="Website-Accessed" class="form-control col-sm-8" type="date" placeholder="Date Accessed" aria-label="Date Accessed" />
+        <div class="input-group">
+            <label for="Website-Accessed" class="form-control">Date Accessed</label>
+            <input  id="Website-Accessed" class="form-control" type="date" placeholder="Date Accessed" aria-label="Date Accessed"/>
         </div>
     </div>`;
 
@@ -177,44 +177,6 @@ function toggleModalElement(eventId, modalId) {
     });
 }
 
-if (document.getElementById("navList") != null) {
-    let nav = document.getElementById("navList");
-    const nav_items = {
-        Book: "citation",
-        Journal: "citation",
-        Movie: "citation",
-        Website: "citation",
-    };
-
-    for (const [key, value] of Object.entries(nav_items)) {
-        console.log(key, " = ", value);
-        let li = document.createElement("li");
-        let link = document.createElement("a");
-        link.className = "dropdown-item btn-lg btn-primary";
-        link.innerText = key;
-        link.href = "#" + value;
-        link.setAttribute("data-bs-toggle", "modal");
-        link.setAttribute("data-bs-target", link.href);
-        li.addEventListener(
-            "click",
-            function() {
-                if (citation_selected != link.innerText) {
-                    citation_selected = link.innerText;
-                    toggleElementCitation(value, "block")
-                } else
-                    toggleElement(value);
-                citation_selected = link.innerText;
-            },
-            false
-        );
-        li.appendChild(link);
-        nav.appendChild(li);
-    }
-}
-
-let modalGeneric = null;
-
-
 function createModalGeneric(title) {
     modalGeneric = document.getElementById("Modal-View");
     modalGeneric.innerHTML = `
@@ -236,6 +198,8 @@ function createModalGeneric(title) {
     </div>`;
 }
 
+let modalGeneric = null;
+
 document.addEventListener("DOMContentLoaded", function() {
     const toggle_items = {
         Book: "citation",
@@ -246,6 +210,41 @@ document.addEventListener("DOMContentLoaded", function() {
         listAPAFormat: "apa6formats",
         listBlogPosts: "blogposts",
     };
+
+    if (document.getElementById("navList") != null) {
+        let nav = document.getElementById("navList");
+        const nav_items = {
+            Book: "citation",
+            Journal: "citation",
+            Movie: "citation",
+            Website: "citation",
+        };
+
+        for (const [key, value] of Object.entries(nav_items)) {
+            console.log(key, " = ", value);
+            let li = document.createElement("li");
+            let link = document.createElement("a");
+            link.className = "dropdown-item btn-lg btn-primary";
+            link.innerText = key;
+            link.href = "#" + value;
+            link.setAttribute("data-bs-toggle", "modal");
+            link.setAttribute("data-bs-target", link.href);
+            li.addEventListener(
+                "click",
+                function() {
+                    if (citation_selected != link.innerText) {
+                        citation_selected = link.innerText;
+                        toggleElementCitation(value, "block")
+                    } else
+                        toggleElement(value);
+                    citation_selected = link.innerText;
+                },
+                false
+            );
+            li.appendChild(link);
+            nav.appendChild(li);
+        }
+    }
 
     if (document.getElementById("Modal-Search") != null)
         toggleModalElement("Modal-Search", "Modal-View")
